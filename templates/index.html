@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart To-Do</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app {
+            background: #ffffff;
+            width: 420px;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            margin: 0 0 16px;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        button {
+            background: #667eea;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #5567d8;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background: #f7f8fc;
+            padding: 12px 14px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .task-text {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .done {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .actions a {
+            margin-left: 8px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .complete {
+            color: #28a745;
+        }
+
+        .delete {
+            color: #dc3545;
+        }
+
+        .actions a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <h1>📝 Smart To-Do</h1>
+
+    <form method="POST">
+        <input type="text" name="task" placeholder="What needs to be done?" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        {% for t in tasks %}
+        <li>
+            <div>
+                <div class="task-text">{{ t[1] }}</div>
+                <span class="status {{ 'pending' if t[2]=='Pending' else 'done' }}">
+                    {{ t[2] }}
+                </span>
+            </div>
+
+            <div class="actions">
+                {% if t[2] == 'Pending' %}
+                    <a class="complete" href="/complete/{{ t[0] }}">✔</a>
+                {% endif %}
+                <a class="delete" href="/delete/{{ t[0] }}">✖</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
